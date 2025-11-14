@@ -5,8 +5,9 @@ import Blog, { loaderBlogs } from "./Blog";
 import NotFound from "./NotFound";
 import LayoutPublic from "../layout/LayoutPublic";
 import Post, { loaderPost } from "./Post";
+import Login from "./Login";
+import ProtectedRoute from "../components/ProtectedRoute";
 
-// creamos el router y su configuración basica
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -19,17 +20,33 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/login",
+        element: <Login />,
+      },
+      {
         path: "/about",
-        element: <About />,
+        element: (
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/blog",
-        element: <Blog />,
+        element: (
+          <ProtectedRoute>
+            <Blog />
+          </ProtectedRoute>
+        ),
         loader: loaderBlogs,
       },
       {
         path: "/blog/:id",
-        element: <Post />,
+        element: (
+          <ProtectedRoute>
+            <Post />
+          </ProtectedRoute>
+        ),
         loader: loaderPost,
       },
     ],
